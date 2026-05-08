@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRX Cloud Mining Pro</title>
+    <title>TRX Cloud Mining Pro - Ultimate Edition</title>
+    <!-- Bootstrap 5 & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root { --trx-red: #ff0013; --glass: rgba(255, 255, 255, 0.05); }
         body { background-color: #0f0f0f; color: #e0e0e0; padding-bottom: 80px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .app-container { max-width: 500px; margin: 0 auto; background: #161616; min-height: 100vh; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.7); overflow-x: hidden; }
         
-        .glass-card { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; }
+        /* Mobile First App Container */
+        .app-container { max-width: 500px; margin: 0 auto; background: #161616; min-height: 100vh; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.8); overflow-x: hidden; }
+        
+        /* Glassmorphism UI */
+        .glass-card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
         .text-trx { color: var(--trx-red); }
         .bg-trx { background: var(--trx-red); color: white; border: none; }
         .bg-trx:hover { background: #d40010; color: white; }
         
+        /* Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; max-width: 500px; width: 100%; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 1000; }
         .nav-item { text-align: center; color: #777; font-size: 11px; cursor: pointer; flex: 1; transition: 0.3s; }
         .nav-item i { display: block; font-size: 18px; margin-bottom: 4px; }
-        .nav-item.active { color: var(--trx-red); transform: translateY(-3px); }
+        .nav-item.active { color: var(--trx-red); transform: translateY(-4px); font-weight: bold; }
 
+        /* Animations */
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .spin { animation: rotate 3s linear infinite; }
-        
-        .hidden { display: none !important; }
-        
-        /* Transaction Feed Animation */
+        .spin { animation: rotate 4s linear infinite; }
+        .pulse { animation: pulse-red 2s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 19, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 19, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 19, 0); } }
         .tx-item { animation: slideDown 0.4s ease-out; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Utilities */
+        .hidden { display: none !important; }
+        .bounty-badge { background: linear-gradient(45deg, #ffd700, #ff8c00); color: #000; font-weight: 800; padding: 2px 6px; border-radius: 4px; font-size: 9px; vertical-align: top; margin-left: 2px;}
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <!-- Header -->
-    <header class="p-3 border-bottom border-secondary d-flex justify-content-between align-items-center sticky-top bg-dark">
-        <h5 class="m-0 fw-bold"><i class="fa-solid fa-cloud-bolt text-trx spin me-1"></i> TRX PRO</h5>
+    <!-- TOP HEADER -->
+    <header class="p-3 border-bottom border-secondary d-flex justify-content-between align-items-center sticky-top bg-dark shadow-sm">
+        <h5 class="m-0 fw-bold"><i class="fa-solid fa-cloud-bolt text-trx spin me-2"></i>TRX <span class="text-trx">PRO</span></h5>
         <div id="headerBalance" class="hidden glass-card px-3 py-1 fw-bold text-trx small">
             <i class="fa-solid fa-wallet"></i> <span id="navBalance">0.00</span> TRX
         </div>
@@ -44,92 +52,196 @@
 
     <div class="p-3" id="mainContent">
 
-        <!-- LOGIN / SIGNUP VIEW -->
+        <!-- 1. LOGIN / SIGNUP VIEW -->
         <div id="view-login" class="text-center mt-4">
-            <i class="fa-brands fa-hive fa-4x text-trx mb-2"></i>
-            <h3 class="fw-bold">TRX Mining</h3>
-            <p class="text-success fw-bold small"><i class="fa-solid fa-gift"></i> 100 TRX Signup Bonus (Active Mining)</p>
+            <i class="fa-brands fa-hive fa-4x text-trx mb-2 pulse rounded-circle"></i>
+            <h3 class="fw-bold mt-2">Secure Mining</h3>
+            <p class="text-success fw-bold small"><i class="fa-solid fa-gift"></i> 100 TRX Signup Bonus (Auto-Mining)</p>
             
-            <div class="glass-card p-4 mt-3 text-start">
+            <div class="glass-card p-4 mt-3 text-start shadow">
                 <div class="mb-3">
-                    <input type="text" id="trxAddress" class="form-control bg-dark border-secondary text-white py-2" placeholder="TRX Wallet Address (Starts with T)">
+                    <input type="text" id="trxAddress" class="form-control bg-dark border-secondary text-white py-2" placeholder="Wallet Address (Starts with T)">
                 </div>
                 <div class="mb-3">
                     <input type="password" id="trxPin" class="form-control bg-dark border-secondary text-white py-2" placeholder="4-Digit PIN" maxlength="4">
                 </div>
-                <button class="btn bg-trx w-100 fw-bold py-2" onclick="login()">LOGIN / REGISTER</button>
+                <button class="btn bg-trx w-100 fw-bold py-2 text-uppercase" onclick="login()">Start Earning</button>
             </div>
 
-            <!-- Login Page Recent Transactions -->
+            <!-- Login Page Live Feed -->
             <div class="mt-4 text-start">
-                <h6 class="text-uppercase fw-bold text-muted small"><i class="fa-solid fa-satellite-dish text-info"></i> Recent Global Payouts</h6>
-                <div class="glass-card p-0 overflow-hidden">
-                    <ul class="list-group list-group-flush bg-transparent" id="loginActivityFeed">
-                        <!-- JS fills this -->
-                    </ul>
+                <h6 class="text-uppercase fw-bold text-muted small"><i class="fa-solid fa-satellite-dish text-info spin"></i> Live Global Payouts</h6>
+                <div class="glass-card p-0 overflow-hidden border-secondary">
+                    <ul class="list-group list-group-flush bg-transparent" id="loginActivityFeed"></ul>
                 </div>
             </div>
         </div>
 
-        <!-- DASHBOARD VIEW -->
+        <!-- 2. ADMIN PANEL (Hidden) -->
+        <div id="view-admin" class="hidden">
+            <div class="glass-card p-4 border-danger border-2 text-center">
+                <h3 class="text-danger fw-bold"><i class="fa-solid fa-user-secret"></i> MASTER CONTROL</h3>
+                <hr class="border-secondary">
+                <div class="mb-3 text-start">
+                    <label class="form-label text-info small">Set Withdrawable Balance</label>
+                    <div class="input-group">
+                        <input type="number" id="adminNewBalance" class="form-control bg-dark text-white border-secondary" placeholder="Amount">
+                        <button class="btn btn-info" onclick="adminSetBalance()">Update</button>
+                    </div>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label text-warning small">Global Deposit Address</label>
+                    <input type="text" id="adminNewAddress" class="form-control bg-dark text-white border-secondary mb-2" placeholder="T...">
+                    <button class="btn btn-warning w-100" onclick="adminSetAddress()">Update Routing</button>
+                </div>
+                <button class="btn btn-outline-danger w-100 mt-3" onclick="logout()">Exit Admin</button>
+            </div>
+        </div>
+
+        <!-- 3. HOME / DASHBOARD VIEW -->
         <div id="view-home" class="hidden">
-            <!-- Balance Breakdown -->
+            <!-- Dual Balance Display -->
             <div class="row g-2 mb-3">
                 <div class="col-6">
                     <div class="glass-card p-3 text-center border-bottom border-danger border-3">
-                        <div class="small text-muted mb-1">Mining Bonus (Locked)</div>
-                        <h5 class="fw-bold text-white mb-0">100.00 TRX</h5>
+                        <div class="small text-muted mb-1"><i class="fa-solid fa-lock"></i> Locked Bonus</div>
+                        <h6 class="fw-bold text-white mb-0">100.00 TRX</h6>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="glass-card p-3 text-center border-bottom border-success border-3">
-                        <div class="small text-muted mb-1">Withdrawable</div>
-                        <h5 class="fw-bold text-success mb-0"><span id="withdrawableDisplay">0.00</span> TRX</h5>
+                        <div class="small text-muted mb-1"><i class="fa-solid fa-unlock"></i> Withdrawable</div>
+                        <h6 class="fw-bold text-success mb-0"><span id="withdrawableDisplay">0.00</span> TRX</h6>
                     </div>
                 </div>
             </div>
 
-            <!-- Live Mining Display -->
-            <div class="glass-card p-4 text-center mb-4 position-relative overflow-hidden">
-                <i class="fa-solid fa-microchip fa-2x text-muted mb-2 spin"></i>
-                <div class="small text-uppercase text-muted">Live Mined Earnings</div>
+            <!-- Live Mining Interface -->
+            <div class="glass-card p-4 text-center mb-4 position-relative overflow-hidden border-trx shadow">
+                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle, rgba(255,0,19,0.1) 0%, rgba(0,0,0,0) 70%);"></div>
+                <i class="fa-solid fa-microchip fa-3x text-muted mb-2 spin"></i>
+                <div class="small text-uppercase text-muted">Cloud Rig Yield</div>
                 <h2 class="fw-bold mb-0 text-white">+ <span id="liveMining">0.000000</span></h2>
-                <div class="progress mt-3 mb-2" style="height: 5px; background: #000;">
+                <div class="progress mt-3 mb-2" style="height: 4px; background: #000;">
                     <div class="progress-bar bg-trx progress-bar-animated progress-bar-striped" style="width: 100%"></div>
                 </div>
-                <p class="small text-muted m-0">Mining power generated by 100 TRX Bonus.</p>
+                <p class="small text-muted m-0">Generated by 100 TRX Hashrate</p>
             </div>
 
-            <!-- Network Feed -->
-            <h6 class="text-uppercase fw-bold text-muted mb-3 small"><i class="fa-solid fa-chart-line text-trx"></i> Live Network Activity</h6>
+            <!-- Premium Plan (Updated: 10 to 5000 TRX, 18% Daily, 30 Days) -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="m-0 text-uppercase fw-bold text-muted"><i class="fa-solid fa-bolt text-warning"></i> Upgrade Speed</h6>
+                <span class="badge bg-success">30 Days</span>
+            </div>
+
+            <div class="glass-card p-3 mb-4 border-start border-trx border-4 position-relative overflow-hidden shadow">
+                <div style="position: absolute; top: 10px; right: -25px; background: #ff0013; font-size: 9px; font-weight: bold; padding: 2px 25px; transform: rotate(45deg);">HOT</div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <div class="fw-bold text-white fs-5">Premium Node</div>
+                        <div class="small text-muted">10 TRX - 5,000 TRX</div>
+                    </div>
+                    <div class="text-end me-3">
+                        <div class="text-trx fw-bold fs-4">18%</div>
+                        <div class="small text-muted fw-bold">Daily Return</div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-group-text bg-dark border-secondary text-muted"><i class="fa-solid fa-coins"></i></span>
+                    <input type="number" id="investAmount" class="form-control bg-dark border-secondary text-white" placeholder="Amount (Min 10 TRX)">
+                    <button class="btn bg-trx fw-bold" onclick="buyCustomPlan()">Activate</button>
+                </div>
+            </div>
+
+            <h6 class="text-uppercase fw-bold text-muted mb-2 small">Dashboard Network Log</h6>
             <div id="userActivityFeed" class="small"></div>
         </div>
 
-        <!-- REFERRAL / TEAM VIEW -->
-        <div id="view-referral" class="hidden text-center">
-            <h4 class="fw-bold mb-3">Affiliate Program</h4>
-            <div class="glass-card p-4 mb-3 border-trx">
-                <h1 class="text-warning fw-bold mb-1">15%</h1>
-                <p class="text-muted small">Commission on every deposit made by your referrals. Added directly to withdrawable balance!</p>
+        <!-- 4. DEPOSIT VIEW -->
+        <div id="view-deposit" class="hidden text-center">
+            <h4 class="fw-bold mb-3">Recharge Account</h4>
+            <div class="alert alert-dark small border-secondary text-info p-2 text-start"><i class="fa-solid fa-circle-info"></i> Minimum Deposit: 10 TRX.</div>
+            
+            <div class="glass-card p-4 mb-3">
+                <p class="small text-muted">Scan QR or copy address to deposit TRX (TRC20)</p>
+                <div class="bg-white p-2 d-inline-block rounded mb-3">
+                    <img id="depQr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TVVZpQyXBzwRuPC6cPyLfRYhmSbEiCozrb" alt="Deposit QR">
+                </div>
+                <div class="bg-dark p-2 rounded border border-secondary mb-3 small text-break font-monospace text-trx" id="depAddressDisplay">
+                    TVVZpQyXBzwRuPC6cPyLfRYhmSbEiCozrb
+                </div>
+                <button class="btn btn-outline-light btn-sm w-100" onclick="copyText('depAddressDisplay', 'Deposit Address')"><i class="fa-solid fa-copy"></i> Copy Address</button>
+            </div>
+            
+            <div class="alert bg-dark text-warning small border-warning py-2 shadow-sm">
+                <i class="fa-solid fa-stopwatch spin"></i> Payment Window: <span id="depTimer" class="fw-bold fs-6">05:00</span>
+            </div>
+            <div id="depNotice" class="text-danger hidden mt-2 small fw-bold">Session expired. Please refresh.</div>
+        </div>
+
+        <!-- 5. WITHDRAW VIEW -->
+        <div id="view-withdraw" class="hidden">
+            <h4 class="fw-bold mb-3">Withdraw Profits</h4>
+            <div class="glass-card p-4">
+                <div class="alert alert-dark small border-secondary text-warning p-2 mb-3">
+                    <i class="fa-solid fa-shield"></i> Rules: Min 10 TRX. Requires 1 Active Plan.
+                </div>
                 
-                <!-- Auto-generated QR Code Container -->
-                <div class="bg-white p-2 d-inline-block rounded mb-3 mt-2">
-                    <img id="refQrCode" src="" alt="Referral QR Code" width="140" height="140">
+                <!-- 24H Cooldown State -->
+                <div id="withdrawCooldownArea" class="hidden text-center py-4">
+                    <i class="fa-solid fa-clock-rotate-left fa-3x text-warning mb-3 spin"></i>
+                    <h6 class="text-warning text-uppercase">Next Payout Available In:</h6>
+                    <h2 class="fw-bold font-monospace text-white" id="cooldownTimer">24:00:00</h2>
+                    <p class="small text-muted mt-2">Security lock active to prevent network spam.</p>
                 </div>
 
-                <div class="text-start mb-3">
-                    <label class="form-label text-muted small">Your Unique Link</label>
+                <!-- Withdrawal Form State -->
+                <div id="withdrawFormArea">
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-dark rounded border border-secondary">
+                        <span class="text-muted small">Available Balance:</span>
+                        <strong class="text-success fs-5"><span id="withdrawAvailable">0.00</span> <small>TRX</small></strong>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-muted small">Amount (TRX)</label>
+                        <input type="number" id="withdrawAmount" class="form-control bg-dark border-secondary text-white" placeholder="Min 10 TRX">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small">Security PIN</label>
+                        <input type="password" id="withdrawPin" class="form-control bg-dark border-secondary text-white" placeholder="****" maxlength="4">
+                    </div>
+                    <button class="btn btn-success w-100 fw-bold py-2 shadow" onclick="processWithdraw()"><i class="fa-solid fa-paper-plane"></i> Submit Request</button>
+                    <div id="withdrawMsg" class="mt-3 text-center small fw-bold"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. TEAM / REFERRAL VIEW -->
+        <div id="view-team" class="hidden text-center">
+            <h4 class="fw-bold mb-3">Affiliate Program</h4>
+            <div class="glass-card p-4 mb-3 border-trx shadow-sm">
+                <h1 class="text-warning fw-bold mb-0 pulse">15%</h1>
+                <h6 class="text-white text-uppercase">Instant Commission</h6>
+                <p class="text-muted small">Earn 15% on every deposit made by your referrals. Added directly to withdrawable balance.</p>
+                
+                <div class="bg-white p-2 d-inline-block rounded mb-3 mt-2">
+                    <img id="refQrCode" src="" alt="Referral QR Code" width="130" height="130">
+                </div>
+
+                <div class="text-start mb-2">
+                    <label class="form-label text-muted small">Your Invitation Link</label>
                     <div class="input-group">
                         <input type="text" id="refLinkInput" class="form-control bg-dark text-white border-secondary small" readonly>
-                        <button class="btn btn-secondary" onclick="copyRefLink()"><i class="fa-solid fa-copy"></i></button>
+                        <button class="btn btn-secondary" onclick="copyText('refLinkInput', 'Referral Link', true)"><i class="fa-solid fa-copy"></i></button>
                     </div>
                 </div>
             </div>
             
             <div class="glass-card p-3 text-start">
-                <h6 class="fw-bold text-white mb-2">My Team Stats</h6>
-                <div class="d-flex justify-content-between text-muted small border-bottom border-secondary pb-2 mb-2">
-                    <span>Total Referrals:</span> <strong class="text-white">0 Users</strong>
+                <h6 class="fw-bold text-white mb-2 border-bottom border-secondary pb-2">Network Stats</h6>
+                <div class="d-flex justify-content-between text-muted small mb-2">
+                    <span>Total Referrals:</span> <strong class="text-white">0 Active</strong>
                 </div>
                 <div class="d-flex justify-content-between text-muted small">
                     <span>Earned Commission:</span> <strong class="text-success">0.00 TRX</strong>
@@ -137,219 +249,322 @@
             </div>
         </div>
 
-        <!-- WITHDRAW VIEW -->
-        <div id="view-withdraw" class="hidden">
-            <h4 class="fw-bold mb-3">Withdraw Funds</h4>
-            <div class="glass-card p-4">
-                <div class="alert alert-dark small border-secondary text-info p-2 mb-4">
-                    <i class="fa-solid fa-circle-info"></i> Your 100 TRX Bonus is locked for mining. You can only withdraw your mined profits and referral commissions.
-                </div>
-                
-                <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-dark rounded border border-secondary">
-                    <span class="text-muted small">Available to Withdraw:</span>
-                    <strong class="text-success fs-5"><span id="withdrawAvailable">0.00</span> TRX</strong>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label text-muted small">Amount (TRX)</label>
-                    <input type="number" id="withdrawAmount" class="form-control bg-dark border-secondary text-white" placeholder="Minimum 10 TRX">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label text-muted small">Security PIN</label>
-                    <input type="password" id="withdrawPin" class="form-control bg-dark border-secondary text-white" placeholder="****" maxlength="4">
-                </div>
-                <button class="btn btn-success w-100 fw-bold py-2" onclick="processWithdraw()">Submit Withdrawal</button>
-                <div id="withdrawMsg" class="mt-3 text-center small fw-bold"></div>
+        <!-- 7. EXTRA MENU VIEW (Bounty, About, T&C) -->
+        <div id="view-menu" class="hidden">
+            <h4 class="fw-bold mb-3 px-2">App Menu</h4>
+            
+            <!-- Dynamic Content Area for Extra Pages -->
+            <div id="extraContentArea" class="hidden glass-card p-4 mb-3 relative">
+                <button class="btn btn-sm btn-outline-secondary mb-3 w-100" onclick="showMenuMain()"><i class="fa-solid fa-arrow-left"></i> Back to Menu</button>
+                <div id="extraDynamicHTML"></div>
             </div>
+
+            <!-- Main Menu Buttons -->
+            <div id="mainMenuList" class="glass-card overflow-hidden">
+                <div class="list-group list-group-flush bg-transparent">
+                    <button class="list-group-item list-group-item-action bg-transparent text-white border-secondary py-3" onclick="loadExtraPage('bounty')">
+                        <i class="fa-solid fa-gift text-warning me-2 pulse"></i> Social Bounty Program <span class="bounty-badge">HOT</span>
+                    </button>
+                    <button class="list-group-item list-group-item-action bg-transparent text-white border-secondary py-3" onclick="loadExtraPage('how')">
+                        <i class="fa-solid fa-book-open text-info me-2"></i> How to Mine
+                    </button>
+                    <button class="list-group-item list-group-item-action bg-transparent text-white border-secondary py-3" onclick="loadExtraPage('about')">
+                        <i class="fa-solid fa-circle-info text-primary me-2"></i> About Us
+                    </button>
+                    <button class="list-group-item list-group-item-action bg-transparent text-white border-secondary py-3" onclick="loadExtraPage('tc')">
+                        <i class="fa-solid fa-file-contract text-secondary me-2"></i> Terms & Conditions
+                    </button>
+                </div>
+            </div>
+            
+            <a href="https://t.me/your_telegram" target="_blank" class="btn btn-info w-100 fw-bold mt-3 shadow">
+                <i class="fa-brands fa-telegram"></i> 24/7 SUPPORT TELEGRAM
+            </a>
+            <button class="btn btn-outline-danger w-100 fw-bold mt-2" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> SECURE LOGOUT</button>
         </div>
 
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- BOTTOM NAVIGATION -->
     <div class="bottom-nav hidden" id="footerMenu">
         <div class="nav-item active" onclick="switchTab('home', this)">
             <i class="fa-solid fa-house"></i>Home
         </div>
-        <div class="nav-item" onclick="switchTab('referral', this)">
-            <i class="fa-solid fa-users"></i>Team
+        <div class="nav-item" onclick="switchTab('deposit', this)">
+            <i class="fa-solid fa-wallet"></i>Deposit
         </div>
         <div class="nav-item" onclick="switchTab('withdraw', this)">
             <i class="fa-solid fa-arrow-up"></i>Withdraw
         </div>
-        <div class="nav-item" onclick="logout()">
-            <i class="fa-solid fa-right-from-bracket"></i>Exit
+        <div class="nav-item" onclick="switchTab('team', this)">
+            <i class="fa-solid fa-users"></i>Team
+        </div>
+        <div class="nav-item" onclick="switchTab('menu', this); showMenuMain();">
+            <i class="fa-solid fa-bars"></i>Menu
         </div>
     </div>
 </div>
 
+<!-- JAVASCRIPT LOGIC -->
 <script>
-    // System State
-    let withdrawableBalance = 0.00; // Only mined coins & referrals
-    let lockedBonus = 100.00;       // Cannot be withdrawn
+    // --- Application State ---
+    let withdrawableBalance = 0.00;
+    let lockedBonus = 100.00;
     let liveMinedAmount = 0.000000;
     let userWallet = "";
     let userPin = "";
-    let feedInterval;
-    let miningInterval;
+    let hasActivePlan = false;
+    let globalDepositAddress = "TVVZpQyXBzwRuPC6cPyLfRYhmSbEiCozrb";
+    
+    // Timers & Cooldowns
+    let cooldownActive = false;
+    let cooldownTime = 86400; // 24h
+    let miningInterval, feedInterval, depTimerInterval, cdInterval;
 
-    // Run on page load
-    window.onload = () => {
-        generateLoginFeed(); 
-    };
+    // --- Initialization ---
+    window.onload = () => { generateLoginFeed(); };
 
+    // --- Core Functions ---
     function login() {
         const addr = document.getElementById('trxAddress').value.trim();
         const pin = document.getElementById('trxPin').value;
         
-        if(addr.length < 10) return alert("Please enter a valid TRX Wallet Address.");
-        if(pin.length !== 4 || isNaN(pin)) return alert("Security PIN must be exactly 4 digits.");
+        // Hidden Admin Trigger
+        if(addr === 'ADMIN' && pin === '9999') {
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('view-admin').classList.remove('hidden');
+            return;
+        }
+
+        if(addr.length < 10) return alert("Enter a valid TRX Wallet Address.");
+        if(pin.length !== 4 || isNaN(pin)) return alert("PIN must be exactly 4 digits.");
         
-        userWallet = addr;
-        userPin = pin;
+        userWallet = addr; userPin = pin;
         
-        // Setup UI
         document.getElementById('view-login').classList.add('hidden');
         document.getElementById('headerBalance').classList.remove('hidden');
         document.getElementById('footerMenu').classList.remove('hidden');
         
-        updateBalances();
-        setupReferralLink(addr);
+        updateUIBalances();
+        setupAffiliateData(addr);
         switchTab('home', document.querySelectorAll('.nav-item')[0]);
         
-        // Start Mining Simulation based on the 100 TRX Bonus
+        // Start Mining Engine
         miningInterval = setInterval(() => {
-            liveMinedAmount += 0.000015; // Simulated mining speed
+            liveMinedAmount += 0.000015;
             document.getElementById('liveMining').innerText = liveMinedAmount.toFixed(6);
-            
-            // Periodically move mined amount to withdrawable balance (simulated auto-collect every few seconds)
-            if(Math.random() > 0.8) {
-                withdrawableBalance += 0.001; 
-                updateBalances();
-            }
+            if(Math.random() > 0.85) { withdrawableBalance += 0.002; updateUIBalances(); }
         }, 1000);
         
-        initUserFeed();
+        initDashboardFeed();
     }
 
     function logout() {
-        clearInterval(miningInterval);
-        clearInterval(feedInterval);
+        clearInterval(miningInterval); clearInterval(feedInterval); clearInterval(depTimerInterval); clearInterval(cdInterval);
         
-        document.getElementById('view-home').classList.add('hidden');
-        document.getElementById('view-referral').classList.add('hidden');
-        document.getElementById('view-withdraw').classList.add('hidden');
+        ['home', 'team', 'withdraw', 'deposit', 'menu', 'admin'].forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
         document.getElementById('headerBalance').classList.add('hidden');
         document.getElementById('footerMenu').classList.add('hidden');
         
         document.getElementById('view-login').classList.remove('hidden');
-        document.getElementById('trxAddress').value = '';
-        document.getElementById('trxPin').value = '';
-    }
-
-    function updateBalances() {
-        document.getElementById('navBalance').innerText = withdrawableBalance.toFixed(2);
-        document.getElementById('withdrawableDisplay').innerText = withdrawableBalance.toFixed(2);
-        document.getElementById('withdrawAvailable').innerText = withdrawableBalance.toFixed(2);
-    }
-
-    function setupReferralLink(address) {
-        // Create a short pseudo-ID from their address
-        const shortId = address.substring(0, 5) + Math.floor(Math.random() * 999);
-        const link = `https://trxmining.app/?ref=${shortId}`;
-        
-        document.getElementById('refLinkInput').value = link;
-        // Generate QR via public API
-        document.getElementById('refQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(link)}&color=121212&bgcolor=ffffff`;
-    }
-
-    function copyRefLink() {
-        navigator.clipboard.writeText(document.getElementById('refLinkInput').value);
-        alert("Referral link copied! Share to earn 15% commission.");
+        document.getElementById('trxAddress').value = ''; document.getElementById('trxPin').value = '';
     }
 
     function switchTab(view, el) {
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         if(el) el.classList.add('active');
         
-        ['home', 'referral', 'withdraw'].forEach(v => {
+        ['home', 'deposit', 'withdraw', 'team', 'menu'].forEach(v => {
             document.getElementById(`view-${v}`).classList.add('hidden');
         });
         document.getElementById(`view-${view}`).classList.remove('hidden');
-        document.getElementById('withdrawMsg').innerText = ''; // clear messages
+        
+        // Trigger tab specific functions
+        if(view === 'deposit') startDepositTimer();
+        if(view === 'withdraw') document.getElementById('withdrawMsg').innerText = ''; 
     }
 
-    // --- WITHDRAW LOGIC ---
+    function updateUIBalances() {
+        document.getElementById('navBalance').innerText = withdrawableBalance.toFixed(2);
+        document.getElementById('withdrawableDisplay').innerText = withdrawableBalance.toFixed(2);
+        document.getElementById('withdrawAvailable').innerText = withdrawableBalance.toFixed(2);
+    }
+
+    // --- Premium Plan (Custom Amount) ---
+    function buyCustomPlan() {
+        const amt = parseFloat(document.getElementById('investAmount').value);
+        if(isNaN(amt) || amt < 10 || amt > 5000) {
+            alert("Please enter a valid investment amount between 10 and 5,000 TRX.");
+            return;
+        }
+        if(withdrawableBalance < amt) {
+            alert("Insufficient Withdrawable Balance. Please deposit more TRX first.");
+            return;
+        }
+
+        withdrawableBalance -= amt;
+        hasActivePlan = true;
+        updateUIBalances();
+        alert(`Success! Premium Node Activated with ${amt} TRX. You will earn 18% daily for 30 Days!`);
+        document.getElementById('investAmount').value = '';
+    }
+
+    // --- Deposit & Timers ---
+    function startDepositTimer() {
+        let sec = 300; // 5 mins
+        clearInterval(depTimerInterval);
+        document.getElementById('depNotice').classList.add('hidden');
+        
+        depTimerInterval = setInterval(() => {
+            sec--;
+            let m = Math.floor(sec/60), s = sec%60;
+            document.getElementById('depTimer').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if(sec <= 0) {
+                clearInterval(depTimerInterval);
+                document.getElementById('depNotice').classList.remove('hidden');
+            }
+        }, 1000);
+    }
+
+    // --- Withdraw System ---
     function processWithdraw() {
         const amt = parseFloat(document.getElementById('withdrawAmount').value);
         const pin = document.getElementById('withdrawPin').value;
         const msg = document.getElementById('withdrawMsg');
 
-        if (isNaN(amt) || amt < 10) { 
-            msg.innerHTML = "<span class='text-danger'><i class='fa-solid fa-circle-xmark'></i> Minimum withdrawal is 10 TRX</span>"; 
-            return; 
-        }
-        if (amt > withdrawableBalance) { 
-            msg.innerHTML = "<span class='text-danger'><i class='fa-solid fa-circle-xmark'></i> Insufficient Withdrawable Balance</span>"; 
-            return; 
-        }
-        if (pin !== userPin) { 
-            msg.innerHTML = "<span class='text-danger'><i class='fa-solid fa-circle-xmark'></i> Incorrect PIN</span>"; 
-            return; 
-        }
+        if(!hasActivePlan) { msg.innerHTML = "<span class='text-danger'>Buy a Premium Node plan first!</span>"; return; }
+        if(isNaN(amt) || amt < 10) { msg.innerHTML = "<span class='text-danger'>Min 10 TRX required</span>"; return; }
+        if(amt > withdrawableBalance) { msg.innerHTML = "<span class='text-danger'>Insufficient Balance</span>"; return; }
+        if(pin !== userPin) { msg.innerHTML = "<span class='text-danger'>Invalid Security PIN</span>"; return; }
 
-        // Success Processing
         withdrawableBalance -= amt;
-        updateBalances();
-        msg.innerHTML = `<span class='text-success'><i class='fa-solid fa-circle-check'></i> Successfully withdrew ${amt} TRX to your wallet!</span>`;
-        document.getElementById('withdrawAmount').value = '';
-        document.getElementById('withdrawPin').value = '';
+        updateUIBalances();
+        startWithdrawCooldown();
     }
 
-    // --- TRANSACTION FEEDS ---
-    // Helper to generate fake transactions
-    function createTxElement(isDarkBg) {
-        const amt = (Math.random() * 80 + 10).toFixed(2);
+    function startWithdrawCooldown() {
+        cooldownActive = true;
+        document.getElementById('withdrawFormArea').classList.add('hidden');
+        document.getElementById('withdrawCooldownArea').classList.remove('hidden');
+        
+        cooldownTime = 86400; // 24H
+        const display = document.getElementById('cooldownTimer');
+
+        cdInterval = setInterval(() => {
+            cooldownTime--;
+            let h = Math.floor(cooldownTime / 3600);
+            let m = Math.floor((cooldownTime % 3600) / 60);
+            let s = cooldownTime % 60;
+            display.innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+
+            if(cooldownTime <= 0) {
+                clearInterval(cdInterval);
+                cooldownActive = false;
+                document.getElementById('withdrawFormArea').classList.remove('hidden');
+                document.getElementById('withdrawCooldownArea').classList.add('hidden');
+                document.getElementById('withdrawAmount').value = ''; document.getElementById('withdrawPin').value = '';
+            }
+        }, 1000);
+    }
+
+    // --- Affiliate System ---
+    function setupAffiliateData(addr) {
+        const refId = addr.substring(0, 6) + Math.floor(Math.random() * 999);
+        const link = `https://trxmining.app/join/${refId}`;
+        document.getElementById('refLinkInput').value = link;
+        document.getElementById('refQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=${encodeURIComponent(link)}&color=121212`;
+    }
+
+    // --- Extra Menu Pages (Bounty, About, T&C) ---
+    function showMenuMain() {
+        document.getElementById('extraContentArea').classList.add('hidden');
+        document.getElementById('mainMenuList').classList.remove('hidden');
+    }
+
+    function loadExtraPage(page) {
+        document.getElementById('mainMenuList').classList.add('hidden');
+        document.getElementById('extraContentArea').classList.remove('hidden');
+        const content = document.getElementById('extraDynamicHTML');
+        
+        if(page === 'bounty') {
+            content.innerHTML = `
+                <h3 class="text-warning fw-bold text-center mb-1">$100 BOUNTY</h3>
+                <p class="text-muted small text-center mb-4">Promote us and earn free TRX directly to withdraw balance.</p>
+                <div class="mb-3 border-bottom border-secondary pb-3">
+                    <h6 class="text-white"><i class="fa-brands fa-youtube text-danger"></i> YouTube Review ($50)</h6>
+                    <p class="small text-muted mb-2">Create a 3+ minute review video showing deposit/withdraw.</p>
+                    <button class="btn btn-sm btn-outline-warning" onclick="alert('Send YouTube link to Telegram Support')">Submit Link</button>
+                </div>
+                <div class="mb-3 border-bottom border-secondary pb-3">
+                    <h6 class="text-white"><i class="fa-brands fa-telegram text-info"></i> Telegram ($25)</h6>
+                    <p class="small text-muted mb-2">Share your referral link in 5 crypto groups.</p>
+                    <button class="btn btn-sm btn-outline-warning" onclick="alert('Send Screenshots to Telegram Support')">Submit Proof</button>
+                </div>
+                <div>
+                    <h6 class="text-white"><i class="fa-brands fa-x-twitter text-light"></i> Twitter Thread ($25)</h6>
+                    <p class="small text-muted mb-2">Write a thread about your earnings tagging 3 friends.</p>
+                    <button class="btn btn-sm btn-outline-warning" onclick="alert('Send Tweet link to Telegram Support')">Submit Link</button>
+                </div>`;
+        } else if(page === 'how') {
+            content.innerHTML = `<h5 class="fw-bold mb-3">How it Works</h5><ol class="small text-muted lh-lg"><li>Your 100 TRX Bonus auto-mines coins.</li><li>Buy a Premium node to unlock withdrawals and multiply speed.</li><li>Earn 15% from team deposits.</li><li>Withdrawal is processed instantly on the TRON network.</li></ol>`;
+        } else if(page === 'about') {
+            content.innerHTML = `<h5 class="fw-bold mb-3">About Us</h5><p class="small text-muted">TRX PRO Cloud is an industry-leading infrastructure provider. We utilize state-of-the-art ASIC hardware powered by renewable energy sources to guarantee consistent uptime and the highest daily yield rates in the decentralized space.</p>`;
+        } else if(page === 'tc') {
+            content.innerHTML = `<h5 class="fw-bold mb-3">Terms of Service</h5><ul class="small text-muted lh-lg"><li>Strictly 1 account per IP/Device.</li><li>Multiple accounts will result in a permanent ban.</li><li>Deposits are final and non-refundable.</li><li>We reserve the right to modify bounty rewards.</li></ul>`;
+        }
+    }
+
+    // --- Admin Tools ---
+    function adminSetBalance() {
+        const amt = parseFloat(document.getElementById('adminNewBalance').value);
+        if(!isNaN(amt)) { withdrawableBalance = amt; alert("Balance forced to " + amt); }
+    }
+    function adminSetAddress() {
+        const val = document.getElementById('adminNewAddress').value.trim();
+        if(val) {
+            globalDepositAddress = val;
+            document.getElementById('depAddressDisplay').innerText = val;
+            document.getElementById('depQr').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${val}`;
+            alert("Deposit Routing Updated.");
+        }
+    }
+
+    // --- Utilities ---
+    function copyText(elemId, type, isInput=false) {
+        const val = isInput ? document.getElementById(elemId).value : document.getElementById(elemId).innerText;
+        navigator.clipboard.writeText(val);
+        alert(type + " copied to clipboard!");
+    }
+
+    // Fake Transaction Generators
+    function makeTxHtml(isLogin) {
+        const amt = (Math.random() * 90 + 10).toFixed(2);
         const addr = "T" + Math.random().toString(36).substr(2, 6).toUpperCase() + "***";
-        const type = Math.random() > 0.4 ? 'Withdraw' : 'Deposit';
-        const color = type === 'Withdraw' ? 'text-danger' : 'text-success';
-        const icon = type === 'Withdraw' ? 'fa-arrow-up' : 'fa-arrow-down';
+        const isDep = Math.random() > 0.5;
+        const color = isDep ? 'text-success' : 'text-danger';
+        const icon = isDep ? 'fa-arrow-down' : 'fa-arrow-up';
         
-        const li = document.createElement('li');
-        li.className = `list-group-item tx-item d-flex justify-content-between align-items-center ${isDarkBg ? 'bg-transparent text-white border-secondary' : 'glass-card p-2 mb-2'}`;
+        const li = document.createElement(isLogin ? 'li' : 'div');
+        li.className = isLogin 
+            ? "list-group-item tx-item bg-transparent text-white border-secondary d-flex justify-content-between py-2" 
+            : "glass-card p-2 mb-2 tx-item d-flex justify-content-between align-items-center";
         
-        li.innerHTML = `
-            <span class="small"><i class="fa-solid ${icon} ${color} me-2"></i>${addr}</span> 
-            <span class="fw-bold ${color} small">${amt} TRX</span>
-        `;
+        li.innerHTML = `<span><i class="fa-solid ${icon} ${color} me-2"></i>${addr}</span> <span class="fw-bold ${color} small">${amt} TRX</span>`;
         return li;
     }
 
-    // Pre-fill Login Page with 10 items
     function generateLoginFeed() {
         const list = document.getElementById('loginActivityFeed');
-        list.innerHTML = '';
-        for(let i=0; i<10; i++) {
-            list.appendChild(createTxElement(true));
-        }
-        
-        // Keep it live even on login page
-        setInterval(() => {
-            list.prepend(createTxElement(true));
-            if(list.children.length > 10) list.lastChild.remove();
-        }, 3000);
+        for(let i=0; i<8; i++) list.appendChild(makeTxHtml(true));
+        setInterval(() => { list.prepend(makeTxHtml(true)); if(list.children.length > 8) list.lastChild.remove(); }, 3000);
     }
 
-    // Feed for the Dashboard
-    function initUserFeed() {
+    function initDashboardFeed() {
         const feed = document.getElementById('userActivityFeed');
         feed.innerHTML = '';
-        for(let i=0; i<4; i++) feed.appendChild(createTxElement(false));
-        
+        for(let i=0; i<4; i++) feed.appendChild(makeTxHtml(false));
         clearInterval(feedInterval);
-        feedInterval = setInterval(() => {
-            feed.prepend(createTxElement(false));
-            if(feed.children.length > 5) feed.lastChild.remove();
-        }, 4000);
+        feedInterval = setInterval(() => { feed.prepend(makeTxHtml(false)); if(feed.children.length > 5) feed.lastChild.remove(); }, 4000);
     }
 </script>
 </body>
